@@ -7,7 +7,7 @@
  * @version 2009.9.13
  */
 
-public class Digits implements Pressable {
+public class Digits {
    private int presses = 0;  // Counter for total number of presses
    /**
     * Accessor for returning the total number of presses.
