@@ -13,4 +13,9 @@ public class Multitap implements Pressable {
     public String append(String text, int key) {
         return null;
     }
+
+    @Override
+    public int getNumPresses() {
+        return 0;
+    }
 }
