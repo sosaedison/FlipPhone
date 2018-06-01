@@ -7,4 +7,7 @@
  */
 public interface Pressable {
 
+
+
+    public String append(String text, int key);
 }
