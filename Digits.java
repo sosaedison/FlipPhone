@@ -7,7 +7,7 @@
  * @version 2009.9.13
  */
 
-public class Digits {
+public class Digits implements Pressable {
    private int presses = 0;  // Counter for total number of presses
    /**
     * Accessor for returning the total number of presses.
@@ -23,7 +23,7 @@ public class Digits {
     * new string.
     * @param txt  The text entered by the keypad so far
     * @param key  The number of the key that's been pressed
-    * @param return  Updated text for the display
+    * @return  Updated text for the display
     */
    public String append(String txt, int key) {
       presses++;

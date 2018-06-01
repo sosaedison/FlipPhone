@@ -21,7 +21,7 @@ public class Keypad implements ActionListener {
    JTextArea display;   // The text display
    JFrame frame;        // The frame that holds the display and key panels
    JButton[] buttons;   // All of the buttons
-   Digits method;       // The converter object that maps keys to letters
+   Pressable method;       // The converter object that maps keys to letters
    String title;        // Allow all methods to access window's title
    
    /** 
@@ -31,8 +31,12 @@ public class Keypad implements ActionListener {
    public void actionPerformed(ActionEvent e) {
       int i;
       for(i=0; i<buttons.length; i++)      // Search through array of buttons
+      {
          if (e.getSource() == buttons[i])  // for the one that was pressed
+         {
             break;
+         }
+      }
       
       String oldText = display.getText();
       String newText = method.append(oldText, i);
@@ -50,7 +54,7 @@ public class Keypad implements ActionListener {
     * @param method  An object that interprets key presses
     * @param title   A string to use as the window's title
     */
-   public Keypad(Digits method, String title) {
+   public Keypad(Pressable method, String title) {
       this.method = method;
       this.title = title;
       
