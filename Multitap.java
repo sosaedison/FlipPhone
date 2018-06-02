@@ -34,13 +34,44 @@ public class Multitap implements Pressable {
 	public String append(String text, int key) {
 		if(this.key != key) {
 			this.key = key;
+	    }
+		//System.out.println("I'm in line #" + new Exception().getStackTrace()[0].getLineNumber());
+		if(key == 0) {//next key has been pressed...
+			
 		}
+		if(key == 1) {//this key does nothing really...
+			return null;
+		}
+		if(key == 2) {//possible letters: a, b, c, A, B, C
+			if()
+		}
+		if(key == 3) {//possible letters: d, e, f, D, E, F
+			
+		}
+		if(key == 4) {//possible letters: g, h, i, G, H, I
+			
+		}
+		if(key == 5) {//possible letters: a, b, c, A, B, C
+			
+		}
+		//...//
+		if(key == 10) {//shift key has been pressed, now proceed with appropriate upperCase character
+			if(key == 2) {
+				return text;
+			}
+		}
+		
+	    char lowerCase[] = new char[] {};
+	    char upperCase[] = new char[] {};
 	    return null;
 	}
 	
     private int key;
     
-    private char chars[] = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'
+    private char lowerCase[] = new char[]{'0','1','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'
     ,'p','q','r','s','t','u','v','w','x','y','z'};
+    
+    private char upperCase[] = new char[]{'0','1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'
+    ,'P','Q','R','S','T','U','V','W','X','Y','Z'};
 
 }//Multitap
