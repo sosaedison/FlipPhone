@@ -1,28 +1,14 @@
 /**
- * This class is the interface for the other classes in Lab2.
- * 
- * @author Zac Pike
  *
+ *
+ *
+ * @author sosaedison
+ * @author Zac Pike
  */
-public class Pressable {
-	
-	/**
-	 * 
-	 * @author Zac Pike
-	 *
-	 */
-	public class Multitap{
-		
-	}
-	
-	/**
-	 * 
-	 * @author Sosa Edison
-	 *
-	 */
-	public class ReorderedMultitap{
-		
-	}
-	
-	
+public interface Pressable {
+
+    //public int presses = 0;
+    public String append(String text, int key);
+
+    public int getNumPresses();
 }
