@@ -27,9 +27,9 @@ public class Multitap implements Pressable {
 	* along with the number of the pressed key.  We just tack
 	* a new character onto the display's text and return the
 	* new string.
-	* @param txt  The text entered by the keypad so far
+	* @param text  The text entered by the keypad so far
 	* @param key  The letter of the key that's been pressed
-	* @param return  Updated text for the display
+	* @return  Updated text for the display
 	*/
 	public String append(String text, int key) {
 		if(this.key != key) {
@@ -43,7 +43,7 @@ public class Multitap implements Pressable {
 			return null;
 		}
 		if(key == 2) {//possible letters: a, b, c, A, B, C
-			if()
+			//if()
 		}
 		if(key == 3) {//possible letters: d, e, f, D, E, F
 			
