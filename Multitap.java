@@ -14,13 +14,23 @@ import java.util.*;
 
 public class Multitap implements Pressable {
 	
-	private int presses = 0;  // Counter for total number of presses for each key.
-//	/**
-//	* Accessor for returning the total number of presses.
-//	* @return Total number of presses
-//	*/
+
 	public int getNumPresses() { return presses; }
-	
+
+    private int key;
+	private int presses=0;
+	private int index2 =0;
+	private int index3 = 3;
+	private int index4 = 6;
+	private int index5 = 9;
+	private int index6 = 12;
+	private int index7 = 15;
+	private int index8 = 19;
+	private int index9 = 22;
+	private boolean isUppercase = false;
+
+
+	private String oldText ="";
 	/**
 	*This method is invoked by the keypad whenever a key is
 	* pressed.  It's passed the entire contents of the display
@@ -32,43 +42,300 @@ public class Multitap implements Pressable {
 	* @return  Updated text for the display
 	*/
 	public String append(String text, int key) {
-		if(this.key != key) {
-			this.key = key;
-	    }
-		//System.out.println("I'm in line #" + new Exception().getStackTrace()[0].getLineNumber());
-		if(key == 0) {//next key has been pressed...
-			
+		presses++;
+
+		boolean append = false;
+
+//        if(key == 10){
+//            isUppercase = true;
+//        }
+//        System.out.println(isUppercase);
+
+		if(this.key != key && this.key == 10) {
+            isUppercase = true;
+
+
+
+//			if(key == 10){
+//
+//			} else {
+//
+//
+//			}
+		} else {
+
+            oldText = text;
+            append = true;
+            this.key = key;
 		}
-		if(key == 1) {//this key does nothing really...
-			return null;
-		}
-		if(key == 2) {//possible letters: a, b, c, A, B, C
-			//if()
-		}
-		if(key == 3) {//possible letters: d, e, f, D, E, F
-			
-		}
-		if(key == 4) {//possible letters: g, h, i, G, H, I
-			
-		}
-		if(key == 5) {//possible letters: a, b, c, A, B, C
-			
-		}
-		//...//
-		if(key == 10) {//shift key has been pressed, now proceed with appropriate upperCase character
-			if(key == 2) {
-				return text;
+
+		if (key == 1) {
+			return oldText + "";
+		}else if (key == 2) {
+
+			System.out.println(isUppercase);
+			if(isUppercase){
+				String shift = String.valueOf(chars[index2]).toUpperCase();
+				System.out.println(shift);
+				if (index2>2){
+					index2=0;
+				}
+				if (append) {
+					String ret = text + shift;
+					index2++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index2++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index2);
+				if (index2 > 2) {
+					index2 = 0;
+				}
+				if (append) {
+					String ret = text + chars[index2];
+					index2++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index2];
+					index2++;
+					return ret;
+				}
 			}
+		}else if (key == 3) {
+			if(isUppercase){
+				String shift = String.valueOf(chars[index3]).toUpperCase();
+
+				if (index3>5){
+					index3=3;
+				}
+				if (append) {
+					String ret = text + shift;
+					index3++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index3++;
+					return ret;
+				}
+			} else {
+				System.out.println("index " + index3);
+				if (index3 > 5) {
+					index3 = 3;
+				}
+
+				if (append) {
+					String ret = text + chars[index3];
+					index3++;
+					return text + chars[index3];
+				} else {
+					String ret = oldText + chars[index3];
+					index3++;
+					return oldText + chars[index3];
+				}
+			}
+		}else if (key == 4) {
+
+			if(isUppercase){
+				String shift = String.valueOf(chars[index4]).toUpperCase();
+				if (index4>8){
+					index4=6;
+				}
+				if (append) {
+					String ret = text + shift;
+					index4++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index4++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index4);
+				if (index4 > 8) {
+					index4 = 6;
+				}
+				if (append) {
+					String ret = text + chars[index4];
+					index4++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index4];
+					index4++;
+					return ret;
+				}
+			}
+		}else if (key == 5) {
+
+			if(isUppercase){
+				String shift = String.valueOf(chars[index5]).toUpperCase();
+				if (index5>11){
+					index5=9;
+				}
+				if (append) {
+					String ret = text + shift;
+					index5++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index5++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index5);
+				if (index5 > 11) {
+					index5 = 9;
+				}
+				if (append) {
+					String ret = text + chars[index5];
+					index5++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index5];
+					index5++;
+					return ret;
+				}
+			}
+		}else if (key == 6) {
+
+			if(isUppercase){
+				String shift = String.valueOf(chars[index6]).toUpperCase();
+				if (index6>14){
+					index6=12;
+				}
+				if (append) {
+					String ret = text + shift;
+					index6++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index6++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index6);
+				if (index6 > 14) {
+					index6 = 12;
+				}
+				if (append) {
+					String ret = text + chars[index6];
+					index6++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index6];
+					index6++;
+					return ret;
+				}
+			}
+		}else if (key == 7) {
+
+			if(isUppercase){
+				String shift = String.valueOf(chars[index7]).toUpperCase();
+				if (index7>18){
+					index7=15;
+				}
+				if (append) {
+					String ret = text + shift;
+					index7++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index7++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index7);
+				if (index7 > 18) {
+					index7 = 15;
+				}
+				if (append) {
+					String ret = text + chars[index7];
+					index7++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index7];
+					index7++;
+					return ret;
+				}
+			}
+		}else if (key == 8) {
+
+			if(isUppercase){
+				String shift = String.valueOf(chars[index8]).toUpperCase();
+				if (index8>21){
+					index8=19;
+				}
+				if (append) {
+					String ret = text + shift;
+					index8++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index8++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index8);
+				if (index8 > 21) {
+					index8 = 19;
+				}
+				if (append) {
+					String ret = text + chars[index8];
+					index8++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index8];
+					index8++;
+					return ret;
+				}
+			}
+		}else if (key == 9) {
+
+			if(isUppercase){
+				String shift = String.valueOf(chars[index9]).toUpperCase();
+				if (index9>26){
+					index9=22;
+				}
+				if (append) {
+					String ret = text + shift;
+					index9++;
+					return ret;
+				} else {
+					String ret = oldText + shift;
+					index9++;
+					return ret;
+				}
+			} else {
+				System.out.println("index" + index9);
+				if (index9 > 26) {
+					index9 = 22;
+				}
+				if (append) {
+					String ret = text + chars[index9];
+					index9++;
+					return ret;
+				} else {
+					String ret = oldText + chars[index9];
+					index9++;
+					return ret;
+				}
+			}
+		} else if(key == 0) {
+			return oldText + "";
+		} else if(key == 11) {
+			return oldText + " ";
+		} else if(key == 10){
+		    isUppercase = true;
+			return text + " ";
 		}
-		
-	    char lowerCase[] = new char[] {};
-	    char upperCase[] = new char[] {};
 	    return null;
 	}
 	
-    private int key;
+
     
-    private char lowerCase[] = new char[]{'0','1','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'
+    private char chars[] = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'
     ,'p','q','r','s','t','u','v','w','x','y','z'};
     
     private char upperCase[] = new char[]{'0','1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'
