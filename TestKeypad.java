@@ -6,6 +6,6 @@
  */
 public class TestKeypad {
    public static void main(String[] args) {
-      Keypad digitPad = new Keypad(new Digits(), "Digits");
+      Keypad charPad = new Keypad(new Digits(), "Characters");
    }
 }
