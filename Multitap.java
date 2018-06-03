@@ -10,7 +10,7 @@
  * @author Zac Pike
  */
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Multitap implements Pressable {
 	
@@ -28,7 +28,7 @@ public class Multitap implements Pressable {
 	private int index8 = 19;
 	private int index9 = 22;
 	private boolean isUppercase = false;
-
+	
 
 	private String oldText ="";
 	/**
