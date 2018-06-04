@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  *
@@ -9,6 +9,30 @@ import java.util.HashMap;
  */
 public class ReorderedMultitap extends Multitap {
 
+    private int presses=0;
+    private int key;
+    private char chars[] = new char[]{'a','c','b','e','d','f','i','h','g','l','k','j','o','n','m'
+            ,'s','r','p','q','t','u','v','w','y','x','z'};
+    private ArrayList<ArrayList<Character>> orderedDictionary = new ArrayList<>();
+
+
+    public ReorderedMultitap() {
+        super.fillAlphabet(this.chars);
+
+    }
+
+
+    public int getNumPresses() {
+        return presses;
+    }
+
+    public String append(String text, int key) {
+
+
+
+        return null;
+    }
+    /*
     private int presses=0;
     private int key;
     private int index2 =0;
@@ -25,6 +49,7 @@ public class ReorderedMultitap extends Multitap {
 
     private char chars[] = new char[]{'a','c','b','e','d','f','i','h','g','l','k','j','o','n','m'
             ,'s','r','p','q','t','u','v','w','y','x','z'};
+
 
 
     public String append(String text, int key) {
@@ -320,7 +345,8 @@ public class ReorderedMultitap extends Multitap {
         return null;
     }
 
+
     public int getNumPresses() {
         return presses;
-    }
+    }*/
 }

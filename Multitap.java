@@ -3,12 +3,14 @@
  * This method will be used to control the keypad the way it was initially designed
  * with older flip phones. By pressing keys on the keypad, the user will be able to
  * select characters to create messages (old school texting). With each press of the
- * keys, the user can select the desired letter (i.e. the #2 key contains letters: a,
+ * keys, the user can select the desired letter (i.e. the #2 lastKeyPressed contains letters: a,
  * b, and c). Pressing once would get you a lower-case "a", twice a lower-case "b", and
- * three times a lower-case "c". The shift key will be used to get upper-case letters.
+ * three times a lower-case "c". The shift lastKeyPressed will be used to get upper-case letters.
  *
  * @author Zac Pike
  */
+
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.*;
 
@@ -19,15 +21,8 @@ public class Multitap implements Pressable {
     private String oldText = "";
     private boolean isUppercase = false;
     private boolean append = false;
-    private int key = 0;
-    private final int KEY_2 = 0;
-    private final int KEY_3 = 1;
-    private final int KEY_4 = 2;
-    private final int KEY_5 = 3;
-    private final int KEY_6 = 4;
-    private final int KEY_7 = 5;
-    private final int KEY_8 = 6;
-    private final int KEY_9 = 7;
+    private int lastKeyPressed = -1;
+    private final int SHIFT =10;
     private char chars[] = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'
             ,'p','q','r','s','t','u','v','w','x','y','z'};
     private ArrayList<ArrayList<Character>> orderedDictionary = new ArrayList<>();
@@ -109,76 +104,75 @@ public class Multitap implements Pressable {
         key_9.add(chars[charsSpot]);
 
 
-        orderedDictionary.add(key_2);
-        orderedDictionary.add(key_3);
-        orderedDictionary.add(key_4);
-        orderedDictionary.add(key_5);
-        orderedDictionary.add(key_6);
-        orderedDictionary.add(key_7);
-        orderedDictionary.add(key_8);
-        orderedDictionary.add(key_9);
+        this.orderedDictionary.add(key_2);
+        this.orderedDictionary.add(key_3);
+        this.orderedDictionary.add(key_4);
+        this.orderedDictionary.add(key_5);
+        this.orderedDictionary.add(key_6);
+        this.orderedDictionary.add(key_7);
+        this.orderedDictionary.add(key_8);
+        this.orderedDictionary.add(key_9);
 
     }
 
-    private void boundsChecker(int key) {
+    protected void boundsChecker(int key) {
 
-	    if (key == 2) {
-	       if(index == orderedDictionary.get(KEY_2).size()) {
-	           index = 0;
-           }
-        }else if (key == 3) {
-            if(index == orderedDictionary.get(KEY_3).size()) {
-                index = 0;
+        ArrayList<Character> temp = new ArrayList<>();
+        for (int i = 2; i < 10; i++) {
+            if (key == i) {
+                temp = orderedDictionary.get(i-2);
             }
-        }else if (key == 4) {
-            if(index == orderedDictionary.get(KEY_4).size()) {
-                index = 0;
-            }
-        }else if (key == 5) {
-            if(index == orderedDictionary.get(KEY_5).size()) {
-                index = 0;
-            }
-        }else if (key == 6) {
-            if(index == orderedDictionary.get(KEY_6).size()) {
-                index = 0;
-            }
-        }else if (key == 7) {
-            if(index == orderedDictionary.get(KEY_7).size()) {
-                index = 0;
-            }
-        }else if (key == 8) {
-            if(index == orderedDictionary.get(KEY_8).size()) {
-                index = 0;
-            }
-        }else if (key == 9) {
-            if(index == orderedDictionary.get(KEY_9).size()) {
-                index = 0;
-            }
+
         }
+        if (this.index >= temp.size()) {
+            this.index = 0;
+        }
+
+
+
     }
 
-    protected String ret(int key, String text) {
-        String ret = " ";
+    protected String updatedDisp(int key, String text) {
+        String ret = "";
         ArrayList<Character> temp = new ArrayList<>();
 
-//        if (key == 0) {
-//            ret = oldText + " ";
-//            return ret;
-//        } else if (key == 1 || key == 11) {
-//
-//            ret = oldText + "";
-//            return ret;
-//        }
-
+        if(key == SHIFT) {
+            isUppercase = !isUppercase;
+            return text;
+        }
+        if ( key == 11) {
+            oldText = text + " ";
+            ret = oldText;
+            isUppercase = false;
+            return ret;
+        } else if (key == 1 || key == 0) {
+            oldText = text;
+            ret = oldText + "";
+            isUppercase = false;
+            return ret;
+        }
         for (int i = 2; i < 10; i++) {
             if (key == i) {
                 temp = orderedDictionary.get(i-2);
             }
         }
 
+        if(this.lastKeyPressed != key) {
+
+            if (this.lastKeyPressed < 0) {
+                this.lastKeyPressed = key;
+            }else {
+
+                append = true;
+                oldText = text;
+                this.lastKeyPressed = key;
+            }
+        }
+
         if (isUppercase) {
             String upperCase = String.valueOf(temp.get(index)).toUpperCase();
             if (append) {
+                oldText = text;
                 ret = text + upperCase;
                 index++;
                 return ret;
@@ -189,6 +183,7 @@ public class Multitap implements Pressable {
             }
         } else {
             if (append) {
+                oldText = text;
                 ret = text + temp.get(index);
                 index++;
                 return ret;
@@ -205,49 +200,81 @@ public class Multitap implements Pressable {
 	public String append(String text, int key) {
 
 	    presses++;
-        if (this.key != key) {
-            index = 0;
-            append = true;
-            oldText = text;
-            this.key = key;
-            isUppercase = false;
-        } else {
-            append = false;
+	    append = false;
 
-        }
 
-        if(key == 0) {
+
+        boundsChecker(key);
+        return updatedDisp(key, text);
+
+
+
+
+//        else if(this.lastKeyPressed!=10){
+//	        append = true;
+//	        isUppercase = false;
+//        }
+
+
+//        if (this.lastKeyPressed != lastKeyPressed) {
+//            if(this.lastKeyPressed == 10 && this.lastKeyPressed != lastKeyPressed) {
+//                append = true;
+//                oldText = text;
+//                return text;
+//            }else if(lastKeyPressed == 10) {
+//                System.out.println(isUppercase);
+//                isUppercase = !isUppercase;
+//                return text;
+//            }else if(this.lastKeyPressed ==10 && lastKeyPressed == this.lastKeyPressed) {
+//
+//            }
+//            else {
+//                index = 0;
+//                append = true;
+//                oldText = text;
+//                isUppercase = false;
+//                this.lastKeyPressed = lastKeyPressed;
+//
+//            }
+//
+//        } else {
+//            append = false;
+//
+//        }
+
+        /*
+        if(lastKeyPressed == 0) {
             return oldText + "";
-        }else if (key == 1) {
+        }else if (lastKeyPressed == 1) {
             return oldText + "";
-        }else if(key == 2) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 3) {
-            boundsChecker(key);
-             return ret(key,text);
-        }else if(key == 4) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 5) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 6) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 7) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 8) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 9) {
-            boundsChecker(key);
-            return ret(key,text);
-        }else if(key == 10) {
+        }else if(lastKeyPressed == 2) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 3) {
+            boundsChecker(lastKeyPressed);
+             return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 4) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 5) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 6) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 7) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 8) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 9) {
+            boundsChecker(lastKeyPressed);
+            return ret(lastKeyPressed,text);
+        }else if(lastKeyPressed == 10) {
             isUppercase = !isUppercase;
             return oldText;
-        }else if(key == 11) {
+        }else if(lastKeyPressed == 11) {
             return oldText + " ";
 
         } else {
@@ -257,13 +284,12 @@ public class Multitap implements Pressable {
                 return text;
             }
 
-        }
-	    return null;
+        }*/
     }
 
 
 	/*
-    private int key;
+    private int lastKeyPressed;
 	private int presses= 0;
 	private int index2 = 0;
 	private int index3 = 3;
@@ -282,36 +308,36 @@ public class Multitap implements Pressable {
 	private String oldText ="";
 	
 	/**
-	*This method is invoked by the keypad whenever a key is
+	*This method is invoked by the keypad whenever a lastKeyPressed is
 	* pressed.  It's passed the entire contents of the display
-	* along with the number of the pressed key.  We just tack
+	* along with the number of the pressed lastKeyPressed.  We just tack
 	* a new character onto the display's text and return the
 	* new string.
 	* @param text  The text entered by the keypad so far
-	* @param key  The letter of the key that's been pressed
+	* @param lastKeyPressed  The letter of the lastKeyPressed that's been pressed
 	* @return  Updated text for the display
 	*
-	public String append(String text, int key) {
+	public String append(String text, int lastKeyPressed) {
 		presses++;
 
 		boolean append = false;
 
 
-        if(this.key != key) {
-            if(key == 10){
+        if(this.lastKeyPressed != lastKeyPressed) {
+            if(lastKeyPressed == 10){
                 //System.out.println("Switched BOI");
                 isUppercase = true;
             } else {
                 isUppercase = false;
                 oldText = text;
                 append = true;
-                //System.out.println(this.key);
-                this.key = key;
+                //System.out.println(this.lastKeyPressed);
+                this.lastKeyPressed = lastKeyPressed;
             }
         } else {
 
         }
-        if (key == 2) {
+        if (lastKeyPressed == 2) {
 
 			if(isUppercase){//Shift 
 				String shift = String.valueOf(chars[index2]).toUpperCase();
@@ -345,7 +371,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 3) {
+		}else if (lastKeyPressed == 3) {
 			if(isUppercase){
 				String shift = String.valueOf(chars[index3]).toUpperCase();
 
@@ -376,7 +402,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 4) {
+		}else if (lastKeyPressed == 4) {
 
 			if(isUppercase){
 				String shift = String.valueOf(chars[index4]).toUpperCase();
@@ -407,7 +433,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 5) {
+		}else if (lastKeyPressed == 5) {
 
 			if(isUppercase){
 				String shift = String.valueOf(chars[index5]).toUpperCase();
@@ -438,7 +464,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 6) {
+		}else if (lastKeyPressed == 6) {
 
 			if(isUppercase){
 				String shift = String.valueOf(chars[index6]).toUpperCase();
@@ -469,7 +495,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 7) {
+		}else if (lastKeyPressed == 7) {
 
 			if(isUppercase){
 				String shift = String.valueOf(chars[index7]).toUpperCase();
@@ -500,7 +526,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 8) {
+		}else if (lastKeyPressed == 8) {
 
 			if(isUppercase){
 				String shift = String.valueOf(chars[index8]).toUpperCase();
@@ -531,7 +557,7 @@ public class Multitap implements Pressable {
 					return ret;
 				}
 			}
-		}else if (key == 9) {
+		}else if (lastKeyPressed == 9) {
 
 			if(isUppercase){
 				String shift = String.valueOf(chars[index9]).toUpperCase();
@@ -563,14 +589,14 @@ public class Multitap implements Pressable {
 				}
 			}
 		}
-		else if (key == 1) {
+		else if (lastKeyPressed == 1) {
 			return oldText + "";
-		} else if(key == 0) {
+		} else if(lastKeyPressed == 0) {
 			return oldText + "";
-		} else if(key == 11) {
+		} else if(lastKeyPressed == 11) {
 			return oldText + " ";
 		}
-//		else if(key == 10){
+//		else if(lastKeyPressed == 10){
 //		    isUppercase = true;
 //			return text + "";
 //		}
