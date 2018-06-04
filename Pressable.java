@@ -1,7 +1,5 @@
 /**
- *
- *
- *
+ * How we interface with pressable classes on the KeyPad
  *
  * @author sosaedison
  * @author Zac Pike

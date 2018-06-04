@@ -64,13 +64,14 @@ public class Multitap implements Pressable {
      */
 	public Multitap() {
         this.fillAlphabet(this.chars);
+
 	}
 
     /**
      * Fills the smaller arrayLists with appropriate characters
      * @param chars array of Characters
      */
-	protected void fillAlphabet(char[] chars) {
+	private void fillAlphabet(char[] chars) {
         int charsSpot = 0; // holds spot in the character array
 
         //Mini ArrayLists for each character key on the keypad
@@ -161,7 +162,7 @@ public class Multitap implements Pressable {
      * out of bounds when indexing through. We use the int Key
      * @param key the key being pressed
      */
-    protected void boundsChecker(int key) {
+    private void boundsChecker(int key) {
 
         ArrayList<Character> temp = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
@@ -191,7 +192,9 @@ public class Multitap implements Pressable {
 
         //toggle for shift
         if(key == SHIFT) {
+            System.out.println(isUppercase);
             isUppercase = !isUppercase;
+            System.out.println(isUppercase);
             return text;
         }
         //Space Key
@@ -214,6 +217,13 @@ public class Multitap implements Pressable {
             }
         }
 
+        try {
+            if(key > 11) {
+
+            }
+        } catch (IllegalArgumentException e) {
+            return text;
+        }
 
         // Check if we've pressed a new key
         if(this.lastKeyPressed != key) {
@@ -247,7 +257,12 @@ public class Multitap implements Pressable {
                 index++;
                 return ret;
             } else {// it was the same key being pressed, no need to add it yet
-                ret = oldText + temp.get(index);
+                try {
+                    ret = oldText + temp.get(index);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Something bad happened");
+                    return text;
+                }
                 index++;
                 return ret;
             }
@@ -271,5 +286,6 @@ public class Multitap implements Pressable {
         return updatedDisp(key, text);
 
     }
+
 
 }//Multitap

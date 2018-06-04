@@ -39,17 +39,17 @@ public class Keypad implements ActionListener {
       }
       
       String oldText = display.getText();
-      try {
-         String newText = method.append(oldText, i);
-      }catch (IllegalArgumentException a) {
-
-      }catch (NullPointerException b){
-
-      }
       String newText = method.append(oldText, i);
       display.setText(newText);
-      System.out.println(title+": "+
-         (double)method.getNumPresses()/newText.length()+" presses/char");
+      // try-catch that takes care of the exceptions coming out of our methods
+      try {
+         System.out.println(title+": "+
+                 (double)method.getNumPresses()/newText.length()+" presses/char");
+      } catch (IllegalArgumentException x) {
+         System.out.println("Something bad happened");
+      }catch (Exception a) {
+          System.out.println("Something really bad happened");
+      }
       frame.setVisible(true);
    }
    

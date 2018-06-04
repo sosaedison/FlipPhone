@@ -5,6 +5,8 @@
  * possible letter values.
  * @author Brad Richards
  * @version 2009.9.13
+ * @author Sosa Edison
+ * @author Zac Pike
  */
 
 public class Digits implements Pressable {
