@@ -6,9 +6,8 @@
  */
 public class TestKeypad {
    public static void main(String[] args) {
-
-      Keypad charPad = new Keypad(new Multitap(), "Characters");
-      //Keypad charPad2 = new Keypad(new ReorderedMultitap(), "Characters");
-
+      Keypad charPad = new Keypad(new Multitap(), "MultitapCharacters");
+     Keypad charPad2 = new Keypad(new ReorderedMultitap(), "ReorderedMultitapCharacters");
+     Keypad digits = new Keypad(new Digits(), "Digits");
    }
 }
