@@ -39,6 +39,13 @@ public class Keypad implements ActionListener {
       }
       
       String oldText = display.getText();
+      try {
+         String newText = method.append(oldText, i);
+      }catch (IllegalArgumentException a) {
+
+      }catch (NullPointerException b){
+
+      }
       String newText = method.append(oldText, i);
       display.setText(newText);
       System.out.println(title+": "+
