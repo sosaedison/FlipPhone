@@ -174,6 +174,7 @@ public class Multitap implements Pressable {
 					String ret = text + shift;
 					index5++;
 					return ret;
+					
 				} else {
 					String ret = oldText + shift;
 					index5++;
