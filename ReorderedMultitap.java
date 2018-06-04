@@ -18,7 +18,9 @@ public class ReorderedMultitap extends Multitap {
 
     public ReorderedMultitap() {
         super.fillAlphabet(this.chars);
+
     }
+
 
 
     public int getNumPresses() {
